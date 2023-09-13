@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <style type="text/css">
+
+/* CSS goes here */
+
+        </style>
+        <script type="text/javascript">
+            function sendData(){
+                const keyy = document.getElementById("key").value
+                const valuee = document.getElementById("value").value
+                const http = new XMLHttpRequest()
+                http.open("POST", "https://6640-184-19-121-132.ngrok-free.app/make")
+                http.setRequestHeader('Content-Type','application/json')
+                console.log(`key: ${keyy} value: ${valuee}`)
+                const body = {
+                    "key": keyy,
+                    "value": valuee
+                }
+                http.onload = () => {
+                    if (!(http.readyState == 4 && http.status == 200)) {
+                        console.log(`Error: ${http.status}`)
+                    }
+                }
+                http.send(JSON.stringify(body))
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <label for="key">Ticket:</label>
+            <input type="text" id="key" name="key"></input>
+            <label for="value">Value:</label>
+            <input type="text" id="value" name="value"></input>
+            <button onclick="sendData()">Send</button>
+        </div>
+    </body>
+</html>

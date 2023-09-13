@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <style type="text/css">
+        </style>
+        <script type="text/javascript">
+            const http = new XMLHttpRequest();
+            http.open("GET", "http://localhost:3000/data");
+            http.responseType = "json";
+            http.onload = () => {
+                if (http.readyState == 4 && http.status == 200) {
+                    const data = http.response;
+                    console.log(data);
+                } else {
+                    console.log(`Error: ${http.status}`);
+                }
+            };
+            function sendData() {
+                const keyy = document.getElementById("key").value;
+
+                const url = "http://localhost:3000/data?key=" + encodeURIComponent(keyy);
+
+                const http = new XMLHttpRequest();
+                http.open("GET", url);
+                http.responseType = "json";
+                http.onload = () => {
+                    try {
+                        const data = http.response
+                        console.log(data)
+                        document.querySelector(".data").textContent = data.value
+                    } catch {
+                        console.log(`Error: ${http.status}`)
+                        document.querySelector(".data").textContent = "Invalid Key"
+                    }
+                }
+                http.send();
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <label for="key">Key:</label>
+            <input type="text" id="key" name="key"></input>
+            <button onclick="sendData()">Send</button>
+            <div class="data"></div>
+        </div>
+    </body>
+</html>
+
